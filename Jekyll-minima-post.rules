@@ -1,0 +1,29 @@
+# This is is Telegram Instant View template for a blogpost on a Jekyll with default Mimina theme.
+# Check out the full documentation here: https://instantview.telegram.org/docs
+
+# Place the version at the beginning of template. We recommend always using the latest available version of Instant View.
+~version: "2.0"
+
+### STEP 1: Define which pages get Instant View and which don't
+
+# We only want to generate Instant View pages for Posts (_layouts/post.html). Other blog page layouts wont' be processed.
+# Conveniently, all article pages on Jekyll seem to have a <meta property="article:published_time"> tag.
+# If this tag is not present, we'll assume that the page is not an article and does not require an Instant View page.
+# This *condition* does the trick:
+?exists: /html/head/meta[@property="article:published_time"]
+
+### STEP 2: Define the essential elements
+
+# The 'body' and 'title' *properties* are required for an Instant View page to work. 
+body:     //article
+title:    $body//h1[1]
+
+### STEP 3: some tunning to fit IV rules
+# put <img src=".."> outside <p> 
+@split_parent: //p/img
+
+### STEP 4: other clean-ups
+# remove excessive post meta
+@remove: //p[has-class("post-meta")]
+# remove <noscript> text
+@remove: //noscript
